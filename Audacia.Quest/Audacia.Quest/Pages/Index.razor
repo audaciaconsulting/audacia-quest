@@ -2,17 +2,17 @@
 
 @using System.Drawing
 @using Blazor.Extensions
-@using Blazor.Extensions.Canvas.WebGL
+@using Blazor.Extensions.Canvas.Canvas2D
 
 @inject IJSRuntime JsRuntime
 
-<div id="canvasContainer" style="position: fixed; opacity: 1; background-color: black; width: 100%; height: 100%">
+<div id="canvasContainer" style="position: fixed; opacity: 1; background-color: #6495ED; width: 100%; height: 100%">
     <BECanvas @ref="_canvas"></BECanvas>
 </div>
 
 @code
 {
-    private WebGLContext _context;
+    private Canvas2DContext _context;
     protected BECanvasComponent _canvas;
 
     bool _initialized = false;
@@ -25,10 +25,10 @@
             _initialized = true;
         }
 
-        this._context = await this._canvas.CreateWebGLAsync();
+        this._context = await this._canvas.CreateCanvas2DAsync();
 
-        await this._context.ClearColorAsync(0.39f, 0.58f, 0.92f, 1);
-        await this._context.ClearAsync(BufferBits.COLOR_BUFFER_BIT);
+        //await this._context.ClearColorAsync(0.39f, 0.58f, 0.92f, 1);
+        //await this._context.ClearAsync(BufferBits.COLOR_BUFFER_BIT);
     }
 
     private async ValueTask InitGame()
