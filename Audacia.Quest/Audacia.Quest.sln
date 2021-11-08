@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audacia.Quest", "Audacia.Quest\Audacia.Quest.csproj", "{3A294621-636A-4E31-8CD8-A37C8713DB2B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A294621-636A-4E31-8CD8-A37C8713DB2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A294621-636A-4E31-8CD8-A37C8713DB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A294621-636A-4E31-8CD8-A37C8713DB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A294621-636A-4E31-8CD8-A37C8713DB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6A8BB7B-80BF-4BE2-96AD-92609EDFB899}
+	EndGlobalSection
+EndGlobal
