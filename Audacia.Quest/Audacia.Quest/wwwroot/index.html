@@ -42,11 +42,6 @@
             onResize();
         };
 
-        window.onmousedown = (e) => {
-            console.log(e);
-            game.instance.invokeMethodAsync('OnMouseDown');
-        };
-
         window.initCanvas = (instance) => {
             var canvasContainer = document.getElementById('canvasContainer'),
                 canvases = canvasContainer.getElementsByTagName('canvas') || [];
@@ -62,13 +57,14 @@
                 window.game.canvas.onkeyup = (e) => {
                     game.instance.invokeMethodAsync('OnKeyUp', e.keyCode);
                 };
-                window.game.canvas.onblur = (e) => {
+                window.game.canvas.onblur = (e) => {e
                     window.game.canvas.focus();
                 };
-
                 window.game.canvas.onmousedown = (e) => {
-                    console.log(e);
-                    game.instance.invokeMethodAsync('OnMouseDown');
+                    game.instance.invokeMethodAsync('OnMouseDown', e.button, e.x, e.y);
+                };
+                window.game.canvas.onmouseup = (e) => {
+                    game.instance.invokeMethodAsync('OnMouseUp', e.button, e.x, e.y);
                 };
                 window.game.canvas.tabIndex = 0;
                 window.game.canvas.focus();

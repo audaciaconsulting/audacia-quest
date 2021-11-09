@@ -3,16 +3,17 @@
 @using System.Drawing
 @using Blazor.Extensions
 @using Blazor.Extensions.Canvas.Canvas2D
+@using Blazor.Extensions.Canvas.WebGL
 
 @inject IJSRuntime JsRuntime
 
-<div id="canvasContainer" style="position: fixed; opacity: 1; background-color: #6495ED; width: 100%; height: 100%">
+<div id="canvasContainer" style="position: fixed; opacity: 1; width: 100%; height: 100%">
     <BECanvas @ref="_canvas"></BECanvas>
 </div>
 
 @code
 {
-    private Canvas2DContext _context;
+    private WebGLContext _context;
     protected BECanvasComponent _canvas;
 
     bool _initialized = false;
@@ -25,10 +26,10 @@
             _initialized = true;
         }
 
-        this._context = await this._canvas.CreateCanvas2DAsync();
+        this._context = await this._canvas.CreateWebGLAsync();
 
-        //await this._context.ClearColorAsync(0.39f, 0.58f, 0.92f, 1);
-        //await this._context.ClearAsync(BufferBits.COLOR_BUFFER_BIT);
+        await this._context.ClearColorAsync(0.39f, 0.58f, 0.92f, 1);
+        await this._context.ClearAsync(BufferBits.COLOR_BUFFER_BIT);
     }
 
     private async ValueTask InitGame()
@@ -38,7 +39,6 @@
         _canvas.Height = canvasMeta.Height;
         _canvas.Width = canvasMeta.Width;
 
-        // this will make sure that the viewport is correctly initialized
         await JsRuntime.InvokeAsync<object>("gameWindowResize", DotNetObjectReference.Create(this));
     }
 
@@ -63,7 +63,12 @@
     }
 
     [JSInvokable]
-    public async ValueTask OnMouseDown()
+    public async ValueTask OnMouseDown(int mouseButtonCode, int x, int y)
+    {
+    }
+
+    [JSInvokable]
+    public async ValueTask OnMouseUp(int mouseButtonCode, int x, int y)
     {
     }
 
