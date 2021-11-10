@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Audacia.Quest.Core\Audacia.Quest.Core.csproj" />
     <ProjectReference Include="..\Audacia.Quest.Game\Audacia.Quest.Game.csproj" />
   </ItemGroup>
 
