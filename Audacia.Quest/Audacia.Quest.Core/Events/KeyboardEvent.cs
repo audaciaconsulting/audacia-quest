@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Audacia.Quest.Core.Events
 {
-    public class ResizeEvent : BaseEvent<ScreenDimensions>
+    public class KeyboardEvent : BaseEvent<Keyboard>
     {
     }
 }

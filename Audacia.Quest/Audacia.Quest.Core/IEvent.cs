@@ -13,5 +13,7 @@ namespace Audacia.Quest.Core
         void PerformEvent(TParam param);
 
         void Subscribe(PerformEvent<TParam> method);
+
+        void Unsubscribe(PerformEvent<TParam> method);
     }
 }

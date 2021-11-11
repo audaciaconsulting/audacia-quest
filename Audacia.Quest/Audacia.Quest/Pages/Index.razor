@@ -40,7 +40,11 @@
 
         await JsRuntime.InvokeAsync<object>("gameWindowResize", DotNetObjectReference.Create(this));
 
-        EventsCollection.Add("Resize", new ResizeEvent());
+        EventsCollection.Add(EventConstants.RESIZE, new ResizeEvent());
+        EventsCollection.Add(EventConstants.KEY_DOWN, new KeyboardEvent());
+        EventsCollection.Add(EventConstants.KEY_UP, new KeyboardEvent());
+        EventsCollection.Add(EventConstants.MOUSE_DOWN, new MouseEvent());
+        EventsCollection.Add(EventConstants.MOUSE_UP, new MouseEvent());
 
         _game = new Game();
 
@@ -58,7 +62,7 @@
     [JSInvokable]
     public async ValueTask OnResize(int screenWidth, int screenHeight)
     {
-        EventsCollection.PerformEvent("Resize", new ScreenDimensions
+        EventsCollection.PerformEvent(EventConstants.RESIZE, new ScreenDimensions
             {
                 Width = screenWidth,
                 Height = screenHeight
@@ -68,21 +72,41 @@
     [JSInvokable]
     public async ValueTask OnKeyDown(int keyCode)
     {
+        EventsCollection.PerformEvent(EventConstants.KEY_DOWN, new Keyboard
+            {
+                KeyCode = keyCode
+            });
     }
 
     [JSInvokable]
     public async ValueTask OnKeyUp(int keyCode)
     {
+        EventsCollection.PerformEvent(EventConstants.KEY_UP, new Keyboard
+            {
+                KeyCode = keyCode
+            });
     }
 
     [JSInvokable]
     public async ValueTask OnMouseDown(int mouseButtonCode, int x, int y)
     {
+        EventsCollection.PerformEvent(EventConstants.MOUSE_DOWN, new Mouse
+            {
+                ButtonCode = mouseButtonCode,
+                X = x,
+                Y = y
+            });
     }
 
     [JSInvokable]
     public async ValueTask OnMouseUp(int mouseButtonCode, int x, int y)
     {
+        EventsCollection.PerformEvent(EventConstants.MOUSE_UP, new Mouse
+            {
+                ButtonCode = mouseButtonCode,
+                X = x,
+                Y = y
+            });
     }
 
     public class CanvasMeta

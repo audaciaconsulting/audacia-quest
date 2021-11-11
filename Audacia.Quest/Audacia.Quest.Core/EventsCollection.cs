@@ -29,5 +29,11 @@ namespace Audacia.Quest.Core
             var e = (IEvent<T>)AvailableEvents[name];
             e.Subscribe(method);
         }
+
+        public static void Unsubscribe<T>(string name, PerformEvent<T> method)
+        {
+            var e = (IEvent<T>)AvailableEvents[name];
+            e.Unsubscribe(method);
+        }
     }
 }

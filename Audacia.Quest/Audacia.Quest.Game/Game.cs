@@ -1,4 +1,5 @@
 ﻿using Audacia.Quest.Core;
+using Audacia.Quest.Core.Events;
 using Audacia.Quest.Core.Params;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ namespace Audacia.Quest
 
         public Game()
         {
-
         }
 
         public void Init()
@@ -24,7 +24,6 @@ namespace Audacia.Quest
 
         public void LoadContent()
         {
-
         }
 
         public void Update()
