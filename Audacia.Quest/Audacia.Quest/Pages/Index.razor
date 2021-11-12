@@ -30,13 +30,13 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        _context = await this._canvas.CreateCanvas2DAsync();
+
         if (!_initialized)
         {
             await InitGame();
             _initialized = true;
         }
-
-        _context = await this._canvas.CreateCanvas2DAsync();
     }
 
     private async ValueTask InitGame()
@@ -53,7 +53,8 @@
         EventsCollection.Add(EventConstants.MOUSE_DOWN, new MouseEvent());
         EventsCollection.Add(EventConstants.MOUSE_UP, new MouseEvent());
 
-        _game = new Game();
+        var gameContext = new BlazorGameContext(_context);
+        _game = new Game(gameContext);
 
         _game.Init();
         _game.LoadContent();
@@ -63,9 +64,10 @@
     public async ValueTask GameLoop()
     {
         _game.Update();
-        _game.Draw();
 
         await _context.ClearRectAsync(0, 0, _canvas.Width, _canvas.Height);
+
+        _game.Draw();
 
         await _context.DrawImageAsync(_fox, x, y, _canvas.Width / 3, _canvas.Height / 2);
     }
@@ -87,23 +89,6 @@
             {
                 KeyCode = keyCode
             });
-
-        if(keyCode == 39)
-        {
-            x += 20f;
-        }
-        if (keyCode == 37)
-        {
-            x -= 20f;
-        }
-        if (keyCode == 38)
-        {
-            y -= 20f;
-        }
-        if (keyCode == 40)
-        {
-            y += 20f;
-        }
     }
 
     [JSInvokable]
