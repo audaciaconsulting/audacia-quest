@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audacia.Quest", "Audacia.Quest\Audacia.Quest.csproj", "{3A294621-636A-4E31-8CD8-A37C8713DB2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audacia.Quest.Compiler", "Audacia.Quest.Compiler\Audacia.Quest.Compiler.csproj", "{87503816-8604-47B9-8F80-44429D712A95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3A294621-636A-4E31-8CD8-A37C8713DB2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A294621-636A-4E31-8CD8-A37C8713DB2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A294621-636A-4E31-8CD8-A37C8713DB2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87503816-8604-47B9-8F80-44429D712A95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87503816-8604-47B9-8F80-44429D712A95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87503816-8604-47B9-8F80-44429D712A95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87503816-8604-47B9-8F80-44429D712A95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
