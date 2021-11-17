@@ -5,6 +5,8 @@ namespace Audacia.Quest
 {
     public class BlazorGameContext : IGameContext
     {
+        public List<BlazorAsset> Assets { get; set; } = new List<BlazorAsset>();
+
         private readonly Canvas2DContext _context;
 
         public BlazorGameContext(Canvas2DContext context)
@@ -12,9 +14,27 @@ namespace Audacia.Quest
             _context = context;
         }
 
-        public void Draw(Asset asset)
+        public void AddAsset(string assetSource)
         {
-            throw new NotImplementedException();
+            BlazorAsset blazorAsset = new()
+            {
+                Source = assetSource,
+            };
+
+            Assets.Add(blazorAsset);
+        }
+
+        public void ClearAssets()
+        {
+            Assets.Clear();
+        }
+
+        public async Task Draw()
+        {
+            foreach (var asset in Assets)
+            {
+                await _context.DrawImageAsync(asset.Ref, 0, 0, 100, 100);
+            }
         }
     }
 }

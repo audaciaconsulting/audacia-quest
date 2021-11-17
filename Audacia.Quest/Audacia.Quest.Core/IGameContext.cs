@@ -8,6 +8,10 @@ namespace Audacia.Quest.Core
 {
     public interface IGameContext
     {
-        void Draw(Asset asset);
+        void AddAsset(string assetSource);
+
+        void ClearAssets();
+
+        Task Draw();
     }
 }

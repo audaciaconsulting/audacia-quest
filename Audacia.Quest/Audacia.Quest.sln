@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Audacia.Quest", "Audacia.Quest\Audacia.Quest.csproj", "{3A294621-636A-4E31-8CD8-A37C8713DB2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audacia.Quest.Core", "Audacia.Quest.Core\Audacia.Quest.Core.csproj", "{F8E96D0D-660A-49C7-A691-17C49C64D15B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Audacia.Quest.Core", "Audacia.Quest.Core\Audacia.Quest.Core.csproj", "{F8E96D0D-660A-49C7-A691-17C49C64D15B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audacia.Quest.Game", "Audacia.Quest.Game\Audacia.Quest.Game.csproj", "{35CD1290-381F-4CF7-94C0-0CD1DB865C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Audacia.Quest.Game", "Audacia.Quest.Game\Audacia.Quest.Game.csproj", "{35CD1290-381F-4CF7-94C0-0CD1DB865C9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

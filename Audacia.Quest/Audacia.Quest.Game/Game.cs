@@ -8,18 +8,9 @@ namespace Audacia.Quest
     {
         private readonly IGameContext _conext;
 
-        public DateTime Start { get; set; } = DateTime.Now;
-        public DateTime End { get; set; } = DateTime.Now;
-
         public Game(IGameContext conext)
         {
             _conext = conext;
-
-            EventsCollection.Subscribe<Keyboard>(EventConstants.KEY_DOWN, OnKeyDown);
-        }
-
-        private void OnKeyDown(Keyboard keyboard)
-        {
         }
 
         public void Init()
@@ -28,21 +19,21 @@ namespace Audacia.Quest
 
         public void LoadContent()
         {
+            _conext.AddAsset("assets/fox.png");
+        }
+
+        public void ContentLoaded()
+        {
+
         }
 
         public void Update()
         {
-            End = DateTime.Now;
-            Time.DeltaTime = End.Ticks - Start.Ticks;
-
-            // Do Some Stuff
-
-            Start = End;
         }
 
         public void Draw()
         {
-
+            _conext.Draw();
         }
     }
 }

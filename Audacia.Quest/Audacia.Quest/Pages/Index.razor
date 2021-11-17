@@ -9,7 +9,11 @@
 
 @inject IJSRuntime JsRuntime
 
-<img @ref="_fox" hidden src="assets/fox.png" />
+@*<img @ref="_fox" hidden src="assets/fox.png" />*@
+@if (Initialized)
+{
+    <Assets Context="_gameContext" OnLoaded="@OnAssetsLoaded" />
+}
 
 <div id="canvasContainer" style="background-color: #6495ED; position: fixed; opacity: 1; width: 100%; height: 100%">
     <BECanvas @ref="_canvas"></BECanvas>
@@ -18,24 +22,22 @@
 @code
 {
     private Canvas2DContext _context;
-    protected BECanvasComponent _canvas;
+    private BECanvasComponent _canvas;
     private Game _game;
+    private BlazorGameContext _gameContext;
 
-    ElementReference _fox;
-
-    private float x = 0;
-    private float y = 0;
-
-    bool _initialized = false;
+    [Parameter]
+    public bool Initialized { get; set; } = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         _context = await this._canvas.CreateCanvas2DAsync();
 
-        if (!_initialized)
+        if (!Initialized)
         {
             await InitGame();
-            _initialized = true;
+            Initialized = true;
+            this.StateHasChanged();
         }
     }
 
@@ -53,11 +55,16 @@
         EventsCollection.Add(EventConstants.MOUSE_DOWN, new MouseEvent());
         EventsCollection.Add(EventConstants.MOUSE_UP, new MouseEvent());
 
-        var gameContext = new BlazorGameContext(_context);
-        _game = new Game(gameContext);
+        _gameContext = new BlazorGameContext(_context);
+        _game = new Game(_gameContext);
 
         _game.Init();
         _game.LoadContent();
+    }
+
+    protected void OnAssetsLoaded()
+    {
+        _game.ContentLoaded();
     }
 
     [JSInvokable]
@@ -68,8 +75,6 @@
         await _context.ClearRectAsync(0, 0, _canvas.Width, _canvas.Height);
 
         _game.Draw();
-
-        await _context.DrawImageAsync(_fox, x, y, _canvas.Width / 3, _canvas.Height / 2);
     }
 
     [JSInvokable]
