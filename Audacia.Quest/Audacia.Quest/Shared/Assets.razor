@@ -1,19 +1,9 @@
-﻿<div class="assets">
-    @foreach (var asset in Context.Assets)
-    {
-        <img @ref="asset.Ref" src="@asset.Source" hidden />
-    }
-</div>
+﻿@foreach (var asset in Context.Assets)
+{
+    <img @ref="asset.Ref" src="@asset.Renderer.ImageSource" @onload="asset.ContentLoaded" />
+}
 
 @code {
     [Parameter]
     public BlazorGameContext Context { get; set; }
-
-    [Parameter]
-    public EventCallback OnLoaded { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await this.OnLoaded.InvokeAsync(this);
-    }
 }

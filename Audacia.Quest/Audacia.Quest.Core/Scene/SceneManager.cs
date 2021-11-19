@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Audacia.Quest.Core.Core
+﻿namespace Audacia.Quest.Core.Scene
 {
     public class SceneManager
     {
@@ -42,6 +36,11 @@ namespace Audacia.Quest.Core.Core
 
         public static void SetCurrentScene(int index)
         {
+            if (_currentScene != null)
+            {
+                _currentScene.Reset();
+            }
+
             _currentScene = _scenes[index];
             _shouldLoad = true;
         }

@@ -1,39 +1,48 @@
 ﻿using Audacia.Quest.Core;
 using Blazor.Extensions.Canvas.Canvas2D;
+using MudBlazor;
+using System.Numerics;
 
 namespace Audacia.Quest
 {
     public class BlazorGameContext : IGameContext
     {
-        public List<BlazorAsset> Assets { get; set; } = new List<BlazorAsset>();
-
         private readonly Canvas2DContext _context;
+
+        public List<BlazorAsset> Assets { get; set; } = new List<BlazorAsset>();
+        public delegate Task OnAssetInitialized();
+        public event OnAssetInitialized OnAssetInitializedHandeler;
 
         public BlazorGameContext(Canvas2DContext context)
         {
             _context = context;
         }
 
-        public void AddAsset(string assetSource)
+        public void LoadContent(List<Core.Components.IComponent> components)
         {
-            BlazorAsset blazorAsset = new()
-            {
-                Source = assetSource,
-            };
+            var renderable = components.Where(c => c.Renderer != null);
 
-            Assets.Add(blazorAsset);
+            Assets = renderable.Select(r => new BlazorAsset
+            {
+                Id = r.Id,
+                Renderer = r.Renderer
+            }).ToList();
+
+            OnAssetInitializedHandeler?.Invoke();
         }
 
-        public void ClearAssets()
+        public async Task Draw(Core.Components.IComponent component)
         {
-            Assets.Clear();
-        }
+            var asset = Assets.FirstOrDefault(a => a.Id == component.Id);
 
-        public async Task Draw()
-        {
-            foreach (var asset in Assets)
+            if (asset != null && component.Renderer != null)
             {
-                await _context.DrawImageAsync(asset.Ref, 0, 0, 100, 100);
+                await _context.DrawImageAsync(
+                    asset.Ref,
+                    component.Transform.Position.X,
+                    component.Transform.Position.Y,
+                    component.Renderer.Width * component.Transform.Scale.X,
+                    component.Renderer.Height * component.Transform.Scale.Y);
             }
         }
     }

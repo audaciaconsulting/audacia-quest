@@ -1,7 +1,6 @@
 ﻿using Audacia.Quest.Core;
-using Audacia.Quest.Core.Core;
-using Audacia.Quest.Core.Events;
-using Audacia.Quest.Core.Params;
+using Audacia.Quest.Core.Scene;
+using Audacia.Quest.Scenes;
 
 namespace Audacia.Quest
 {
@@ -17,12 +16,6 @@ namespace Audacia.Quest
         public void Init()
         {
             SceneManager.Add(new MainMenu(_context));
-            SceneManager.Add(new Level1(_context));
-        }
-
-        public void ContentLoaded()
-        {
-            SceneManager.GetCurrentScene().ContentLoaded();
         }
 
         public bool Update()

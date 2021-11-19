@@ -1,9 +1,11 @@
 ﻿using Audacia.Quest.Core.Renderer;
 
-namespace Audacia.Quest.Core.Core
+namespace Audacia.Quest.Core.Components
 {
     public interface IComponent
     {
+        Guid Id { get; set; }
+
         bool Enabled { get; set; }
         Transform Transform { get; set; }
         IComponent Parent { get; set; }

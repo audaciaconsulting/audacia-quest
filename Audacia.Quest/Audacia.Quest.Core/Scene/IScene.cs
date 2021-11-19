@@ -1,10 +1,13 @@
-﻿namespace Audacia.Quest.Core.Core
+﻿using Audacia.Quest.Core.Components;
+
+namespace Audacia.Quest.Core.Scene
 {
     public interface IScene
     {
+        void AddComponent(IComponent component);
         void Init();
         void LoadContent();
-        void ContentLoaded();
+        void Reset();
         void Update();
         void Draw();
     }

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Audacia.Quest.Core.Components;
 
 namespace Audacia.Quest.Core
 {
     public interface IGameContext
     {
-        void AddAsset(string assetSource);
+        void LoadContent(List<IComponent> components);
 
-        void ClearAssets();
-
-        Task Draw();
+        Task Draw(IComponent component);
     }
 }

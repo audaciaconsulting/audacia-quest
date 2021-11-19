@@ -1,45 +1,18 @@
-﻿using Audacia.Quest.Core;
-using Audacia.Quest.Core.Core;
-using Audacia.Quest.Core.Events;
-using Audacia.Quest.Core.Params;
+﻿using Audacia.Quest.Components;
+using Audacia.Quest.Core;
+using Audacia.Quest.Core.Scene;
 
-namespace Audacia.Quest
+namespace Audacia.Quest.Scenes
 {
-    public class MainMenu : IScene
+    public class MainMenu : BaseScene
     {
-        private readonly IGameContext _context;
-
-        public MainMenu(IGameContext context)
-        {
-            _context = context;
-            EventsCollection.Subscribe<Keyboard>(EventConstants.KEY_DOWN, SwitchScene);
-        }
-        public void SwitchScene(Keyboard key)
-        {
-            SceneManager.SetCurrentScene(1);
-        }
-
-        public void Init()
+        public MainMenu(IGameContext context) : base(context)
         {
         }
 
-        public void LoadContent()
+        public override void Init()
         {
-            _context.ClearAssets();
-            _context.AddAsset("assets/fox.png");
-        }
-
-        public void ContentLoaded()
-        {
-        }
-
-        public void Update()
-        {
-        }
-
-        public void Draw()
-        {
-            _context.Draw();
+            AddComponent(new FoxComponent());
         }
     }
 }
