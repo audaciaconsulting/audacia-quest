@@ -59,7 +59,6 @@
         _game = new Game(_gameContext);
 
         _game.Init();
-        _game.LoadContent();
     }
 
     protected void OnAssetsLoaded()
@@ -70,7 +69,10 @@
     [JSInvokable]
     public async ValueTask GameLoop()
     {
-        _game.Update();
+        if (_game.Update())
+        {
+            this.StateHasChanged();
+        }
 
         await _context.ClearRectAsync(0, 0, _canvas.Width, _canvas.Height);
 
