@@ -19,7 +19,7 @@ namespace Audacia.Quest.Core.Components
                 return;
             }
 
-            component.Parent = Parent;
+            component.Parent = this;
             var type = component.GetType();
             Components.Add(type.Name, component);
         }
