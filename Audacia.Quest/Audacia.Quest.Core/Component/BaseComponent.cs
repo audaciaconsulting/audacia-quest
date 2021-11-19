@@ -1,4 +1,6 @@
-﻿namespace Audacia.Quest.Core.Core
+﻿using Audacia.Quest.Core.Renderer;
+
+namespace Audacia.Quest.Core.Core
 {
     public abstract class BaseComponent : IComponent
     {
@@ -6,6 +8,7 @@
         public Transform Transform { get; set; }
         public IComponent Parent { get; set; }
         public IDictionary<string, IComponent> Components { get; set; } = new Dictionary<string, IComponent>();
+        public SpriteRenderer? Renderer { get; set; } = null;
 
         public void AddComponent(IComponent component)
         {
