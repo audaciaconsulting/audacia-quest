@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Audacia.Quest.Core.Core
+﻿namespace Audacia.Quest.Core.Core
 {
     public interface IComponent
     {
+        bool Enabled { get; set; }
         Transform Transform { get; set; }
         IComponent Parent { get; set; }
         IDictionary<string, IComponent> Components { get; set; }
 
         void AddComponent(IComponent component);
-        IComponent GetComponent(string name);
+        TComponent? GetComponent<TComponent>() where TComponent : IComponent;
+        void Init();
+        void Update();
     }
 }

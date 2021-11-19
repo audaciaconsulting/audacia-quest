@@ -10,7 +10,7 @@ namespace Audacia.Quest.Core.Core
     public class Transform
     {
         public Vector2 WorldPosition { get; set; } = Vector2.Zero;
-        public Vector2 LocalPosition { get; set; } = Vector2.Zero;
+        public Vector2 Position { get; set; } = Vector2.Zero;
         public Vector2 Scale { get; set; } = Vector2.One;
         public Vector2 Rotation { get; set; } = Vector2.Zero;
     }

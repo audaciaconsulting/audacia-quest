@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Audacia.Quest.Core.Core
+﻿namespace Audacia.Quest.Core.Core
 {
-    public class BaseComponent : IComponent
+    public abstract class BaseComponent : IComponent
     {
+        public bool Enabled { get; set; } = true;
         public Transform Transform { get; set; }
         public IComponent Parent { get; set; }
         public IDictionary<string, IComponent> Components { get; set; } = new Dictionary<string, IComponent>();
@@ -24,14 +19,19 @@ namespace Audacia.Quest.Core.Core
             Components.Add(type.Name, component);
         }
 
-        public IComponent GetComponent(string name)
+        public TComponent? GetComponent<TComponent>()
+            where TComponent : IComponent
         {
+            var name = typeof(TComponent).Name;
             if (Components.ContainsKey(name))
             {
-                return Components[name];
+                return (TComponent)Components[name];
             }
 
-            return null;
+            return default;
         }
+
+        public abstract void Init();
+        public abstract void Update();
     }
 }
