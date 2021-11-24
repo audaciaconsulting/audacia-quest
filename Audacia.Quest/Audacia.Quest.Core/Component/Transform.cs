@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace Audacia.Quest.Core.Components
 {
@@ -20,14 +15,12 @@ namespace Audacia.Quest.Core.Components
 
         public void MoveX(float x)
         {
-            var pos = new Vector2(Position.X + x, Position.Y);
-            Position = pos;
+            Position = new Vector2(Position.X + x, Position.Y);
         }
 
         public void MoveY(float y)
         {
-            var pos = new Vector2(Position.X, Position.Y + y);
-            Position = pos;
+            Position = new Vector2(Position.X, Position.Y + y);
         }
     }
 }

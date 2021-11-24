@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Audacia.Quest.Core
+﻿namespace Audacia.Quest.Core
 {
     public class EventsCollection
     {
@@ -20,20 +14,29 @@ namespace Audacia.Quest.Core
 
         public static void PerformEvent<T>(string name, T param)
         {
-            var e = (IEvent<T>)AvailableEvents[name];
-            e.PerformEvent(param);
+            if (AvailableEvents.ContainsKey(name))
+            {
+                var e = (IEvent<T>)AvailableEvents[name];
+                e.PerformEvent(param);
+            }
         }
 
         public static void Subscribe<T>(string name, PerformEvent<T> method)
         {
-            var e = (IEvent<T>)AvailableEvents[name];
-            e.Subscribe(method);
+            if (AvailableEvents.ContainsKey(name))
+            {
+                var e = (IEvent<T>)AvailableEvents[name];
+                e.Subscribe(method);
+            }
         }
 
         public static void Unsubscribe<T>(string name, PerformEvent<T> method)
         {
-            var e = (IEvent<T>)AvailableEvents[name];
-            e.Unsubscribe(method);
+            if (AvailableEvents.ContainsKey(name))
+            {
+                var e = (IEvent<T>)AvailableEvents[name];
+                e.Unsubscribe(method);
+            }
         }
     }
 }
