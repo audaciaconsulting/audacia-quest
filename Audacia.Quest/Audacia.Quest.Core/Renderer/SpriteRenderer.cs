@@ -2,7 +2,7 @@
 
 namespace Audacia.Quest.Core.Renderer
 {
-    public class SpriteRenderer
+    public class SpriteRenderer : IRenderer
     {
         public SpriteRenderer(string imageSource)
         {

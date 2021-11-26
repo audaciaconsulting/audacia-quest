@@ -21,7 +21,15 @@ namespace Audacia.Quest
         public bool Update()
         {
             var reload = SceneManager.Load();
+
+            if (reload)
+            {
+                Time.Start();
+            }
+
             SceneManager.GetCurrentScene().Update();
+
+            Time.Update();
 
             return reload;
         }

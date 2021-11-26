@@ -13,6 +13,7 @@ namespace Audacia.Quest.Scenes
         public override void Init()
         {
             AddComponent(new FoxComponent());
+            AddComponent(new WizardComponent());
         }
     }
 }

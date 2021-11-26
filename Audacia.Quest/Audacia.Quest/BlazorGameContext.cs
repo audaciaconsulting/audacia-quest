@@ -1,4 +1,5 @@
 ﻿using Audacia.Quest.Core;
+using Audacia.Quest.Core.Renderer;
 using Blazor.Extensions.Canvas.Canvas2D;
 
 namespace Audacia.Quest
@@ -35,12 +36,37 @@ namespace Audacia.Quest
 
             if (asset != null && component.Renderer != null)
             {
-                await _context.DrawImageAsync(
-                    asset.Ref,
-                    component.Transform.Position.X,
-                    component.Transform.Position.Y,
-                    component.Renderer.Width * component.Transform.Scale.X,
-                    component.Renderer.Height * component.Transform.Scale.Y);
+                await _context.SaveAsync();
+
+                await _context.TranslateAsync(component.Transform.Position.X, component.Transform.Position.Y);
+                await _context.ScaleAsync(component.Transform.Scale.X, component.Transform.Scale.Y);
+                //await _context.RotateAsync(component.Transform.Rotation);
+
+                if (component.Renderer is SpriteRenderer)
+                {
+                    await _context.DrawImageAsync(
+                        asset.Ref,
+                        component.Renderer.Origin.X, component.Renderer.Origin.Y,
+                        component.Renderer.Width,
+                        component.Renderer.Height);
+                }
+                else if (component.Renderer is SpriteSheetRenderer spriteSheet)
+                {
+                    var frame = spriteSheet.GetCurrentFrame();
+
+                    await _context.DrawImageAsync(
+                       asset.Ref,
+                       frame.X, frame.Y,
+                       frame.Width,
+                       frame.Height,
+                       component.Renderer.Origin.X, component.Renderer.Origin.Y,
+                       frame.Width,
+                       frame.Height);
+
+                    spriteSheet.NextFrame();
+                }
+
+                await _context.RestoreAsync();
             }
         }
     }

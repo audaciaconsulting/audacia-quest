@@ -9,7 +9,7 @@ namespace Audacia.Quest
     {
         public Guid Id { get; set; }
         public ElementReference Ref { get; set; }
-        public SpriteRenderer Renderer { get; set; }
+        public IRenderer Renderer { get; set; }
 
         public async void ContentLoaded()
         {

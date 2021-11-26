@@ -10,7 +10,7 @@ namespace Audacia.Quest.Core.Components
         public Transform Transform { get; set; } = new Transform();
         public IComponent Parent { get; set; }
         public IDictionary<string, IComponent> Components { get; set; } = new Dictionary<string, IComponent>();
-        public SpriteRenderer? Renderer { get; set; } = null;
+        public IRenderer? Renderer { get; set; } = null;
 
         public void AddComponent(IComponent component)
         {
