@@ -13,16 +13,13 @@
 
 <body>
     <div id="app">Loading...</div>
-
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
-    </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Blazor.Extensions.Canvas/blazor.extensions.canvas.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 
     <script>
+        GetBoundingClientRect = (element, parm) => { return element.getBoundingClientRect(); };
+
         function gameLoop(timeStamp) {
             window.requestAnimationFrame(gameLoop);
             game.instance.invokeMethodAsync('GameLoop');
@@ -42,11 +39,6 @@
             onResize();
         };
 
-        window.onmousedown = (e) => {
-            console.log(e);
-            game.instance.invokeMethodAsync('OnMouseDown');
-        };
-
         window.initCanvas = (instance) => {
             var canvasContainer = document.getElementById('canvasContainer'),
                 canvases = canvasContainer.getElementsByTagName('canvas') || [];
@@ -63,12 +55,14 @@
                     game.instance.invokeMethodAsync('OnKeyUp', e.keyCode);
                 };
                 window.game.canvas.onblur = (e) => {
+                    e
                     window.game.canvas.focus();
                 };
-
                 window.game.canvas.onmousedown = (e) => {
-                    console.log(e);
-                    game.instance.invokeMethodAsync('OnMouseDown');
+                    game.instance.invokeMethodAsync('OnMouseDown', e.button, e.x, e.y);
+                };
+                window.game.canvas.onmouseup = (e) => {
+                    game.instance.invokeMethodAsync('OnMouseUp', e.button, e.x, e.y);
                 };
                 window.game.canvas.tabIndex = 0;
                 window.game.canvas.focus();
