@@ -1,6 +1,6 @@
 ﻿@foreach (var asset in Context.Assets)
 {
-    <img @ref="asset.Ref" src="@asset.Renderer.ImageSource" @onload="asset.ContentLoaded" />
+    <img @ref="asset.Ref" src="@asset.Sprite.ImageSource" @onload="asset.ContentLoaded" />
 }
 
 @code {

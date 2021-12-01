@@ -1,4 +1,4 @@
-﻿using Audacia.Quest.Core.Renderer;
+﻿using Audacia.Quest.Core.Asset;
 
 namespace Audacia.Quest.Core.Components
 {
@@ -10,7 +10,13 @@ namespace Audacia.Quest.Core.Components
         public Transform Transform { get; set; } = new Transform();
         public IComponent Parent { get; set; }
         public IDictionary<string, IComponent> Components { get; set; } = new Dictionary<string, IComponent>();
-        public IRenderer? Renderer { get; set; } = null;
+        public Sprite Sprite { get; set; }
+
+        public IComponent WithRenderer(Sprite sprite)
+        {
+            Sprite = sprite;
+            return this;
+        }
 
         public void AddComponent(IComponent component)
         {

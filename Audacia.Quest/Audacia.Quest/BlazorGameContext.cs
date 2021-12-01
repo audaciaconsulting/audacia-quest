@@ -1,4 +1,5 @@
 ﻿using Audacia.Quest.Core;
+using Audacia.Quest.Core.Asset;
 using Audacia.Quest.Core.Renderer;
 using Blazor.Extensions.Canvas.Canvas2D;
 
@@ -9,32 +10,31 @@ namespace Audacia.Quest
         private readonly Canvas2DContext _context;
 
         public List<BlazorAsset> Assets { get; set; } = new List<BlazorAsset>();
-        public delegate Task OnAssetInitialized();
-        public event OnAssetInitialized OnAssetInitializedHandeler;
 
         public BlazorGameContext(Canvas2DContext context)
         {
             _context = context;
         }
 
-        public void LoadContent(List<Core.Components.IComponent> components)
+        public void LoadContent(List<Sprite> sprites)
         {
-            var renderable = components.Where(c => c.Renderer != null);
-
-            Assets = renderable.Select(r => new BlazorAsset
+            Assets = sprites.Select(r => new BlazorAsset
             {
-                Id = r.Id,
-                Renderer = r.Renderer
+                Source = r.ImageSource,
+                Sprite = r
             }).ToList();
+        }
 
-            OnAssetInitializedHandeler?.Invoke();
+        public bool ContentLoaded()
+        {
+            return Assets.All(a => a.Loaded);
         }
 
         public async Task Draw(Core.Components.IComponent component)
         {
-            var asset = Assets.FirstOrDefault(a => a.Id == component.Id);
+            var asset = Assets.FirstOrDefault(a => a.Source == component.Sprite?.ImageSource);
 
-            if (asset != null && component.Renderer != null)
+            if (asset != null && component.Sprite != null)
             {
                 await _context.SaveAsync();
 
@@ -42,29 +42,35 @@ namespace Audacia.Quest
                 await _context.ScaleAsync(component.Transform.Scale.X, component.Transform.Scale.Y);
                 //await _context.RotateAsync(component.Transform.Rotation);
 
-                if (component.Renderer is SpriteRenderer)
-                {
-                    await _context.DrawImageAsync(
-                        asset.Ref,
-                        component.Renderer.Origin.X, component.Renderer.Origin.Y,
-                        component.Renderer.Width,
-                        component.Renderer.Height);
-                }
-                else if (component.Renderer is SpriteSheetRenderer spriteSheet)
-                {
-                    var frame = spriteSheet.GetCurrentFrame();
+                await _context.DrawImageAsync(
+                    asset.Ref,
+                    component.Sprite.Origin.X, component.Sprite.Origin.Y,
+                    component.Sprite.Width,
+                    component.Sprite.Height);
 
-                    await _context.DrawImageAsync(
-                       asset.Ref,
-                       frame.X, frame.Y,
-                       frame.Width,
-                       frame.Height,
-                       component.Renderer.Origin.X, component.Renderer.Origin.Y,
-                       frame.Width,
-                       frame.Height);
+                //if (component.Renderer is SpriteRenderer)
+                //{
+                //    await _context.DrawImageAsync(
+                //        asset.Ref,
+                //        component.Renderer.Origin.X, component.Renderer.Origin.Y,
+                //        component.Renderer.Width,
+                //        component.Renderer.Height);
+                //}
+                //else if (component.Renderer is SpriteSheetRenderer spriteSheet)
+                //{
+                //    var frame = spriteSheet.GetCurrentFrame();
 
-                    spriteSheet.NextFrame();
-                }
+                //    await _context.DrawImageAsync(
+                //       asset.Ref,
+                //       frame.X, frame.Y,
+                //       frame.Width,
+                //       frame.Height,
+                //       component.Renderer.Origin.X, component.Renderer.Origin.Y,
+                //       frame.Width,
+                //       frame.Height);
+
+                //    spriteSheet.NextFrame();
+                //}
 
                 await _context.RestoreAsync();
             }

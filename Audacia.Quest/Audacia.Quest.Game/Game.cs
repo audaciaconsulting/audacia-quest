@@ -1,4 +1,5 @@
 ﻿using Audacia.Quest.Core;
+using Audacia.Quest.Core.Asset;
 using Audacia.Quest.Core.Scene;
 using Audacia.Quest.Scenes;
 
@@ -18,12 +19,18 @@ namespace Audacia.Quest
             SceneManager.Add(new MainMenu(_context));
         }
 
+        public void ContentLoaded()
+        {
+            SceneManager.Init();
+        }
+
         public bool Update()
         {
             var reload = SceneManager.Load();
 
             if (reload)
             {
+                _context.LoadContent(AssetResolver.GetAll());
                 Time.Start();
             }
 

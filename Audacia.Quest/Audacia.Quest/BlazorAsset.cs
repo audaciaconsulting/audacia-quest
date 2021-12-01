@@ -1,22 +1,22 @@
-﻿using Audacia.Quest.Core.Renderer;
+﻿using Audacia.Quest.Core.Asset;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using System.Numerics;
 
 namespace Audacia.Quest
 {
     public class BlazorAsset
     {
-        public Guid Id { get; set; }
+        public string Source { get; set; }
         public ElementReference Ref { get; set; }
-        public IRenderer Renderer { get; set; }
+        public Sprite Sprite { get; set; }
+        public bool Loaded { get; set; } = false;
 
         public async void ContentLoaded()
         {
             var bounds = await Ref.MudGetBoundingClientRectAsync();
-            Renderer.Width = bounds.Width;
-            Renderer.Height = bounds.Height;
-            Renderer.Origin = Vector2.Zero;
+            Sprite.Width = bounds.Width;
+            Sprite.Height = bounds.Height;
+            Loaded = true;
 
             await Ref.MudChangeCssAsync("hide");
         }
