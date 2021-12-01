@@ -16,6 +16,7 @@ namespace Audacia.Quest.Core.Components
         IComponent WithRenderer(Sprite sprite);
         void AddComponent(IComponent component);
         TComponent? GetComponent<TComponent>() where TComponent : IComponent;
+        void Loaded();
         void Init();
         void Update();
     }

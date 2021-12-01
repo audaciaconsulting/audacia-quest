@@ -58,6 +58,7 @@ namespace Audacia.Quest.Core.Scene
             {
                 var n = nodes.Pop();
                 n.Init();
+                n.Loaded();
                 yield return n;
 
                 foreach (var child in n.Components)

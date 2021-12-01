@@ -8,6 +8,8 @@ namespace Audacia.Quest.Components
     {
         public override void Init()
         {
+            Transform.Position = new Vector2(400, 200);
+
             //Renderer = new SpriteSheetRenderer("assets/Idle.png", new Frame[8]
             //{
             //    new Frame { X = 0, Y = 0, Width = 250, Height = 250 },
@@ -19,12 +21,10 @@ namespace Audacia.Quest.Components
             //    new Frame { X = 1500, Y = 0, Width = 250, Height = 250 },
             //    new Frame { X = 1750, Y = 0, Width = 250, Height = 250 }
             //}, 8);
-            Transform.Position = new Vector2(200, 0);
         }
 
         public override void Update()
         {
-            //Transform.MoveX(1);
         }
     }
 }

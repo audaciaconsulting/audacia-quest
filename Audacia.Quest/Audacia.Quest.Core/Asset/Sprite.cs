@@ -9,9 +9,12 @@ namespace Audacia.Quest.Core.Asset
         public double Height { get; set; }
         public Vector2 Origin { get; set; } = Vector2.Zero;
 
+        public Frame CurrentFrame { get; set; }
+
         public Sprite(string imageSource)
         {
             ImageSource = imageSource;
+            CurrentFrame = new Frame();
         }
     }
 }

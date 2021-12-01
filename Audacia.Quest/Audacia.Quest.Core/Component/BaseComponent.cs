@@ -42,6 +42,17 @@ namespace Audacia.Quest.Core.Components
             return default;
         }
 
+        public void Loaded()
+        {
+            if(Sprite != null)
+            {
+                Sprite.CurrentFrame.X = 0;
+                Sprite.CurrentFrame.Y = 0;
+                Sprite.CurrentFrame.Width = Sprite.Width;
+                Sprite.CurrentFrame.Height = Sprite.Height;
+            }
+        }
+
         public abstract void Init();
         public abstract void Update();
     }

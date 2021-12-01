@@ -1,6 +1,5 @@
 ﻿using Audacia.Quest.Core;
 using Audacia.Quest.Core.Asset;
-using Audacia.Quest.Core.Renderer;
 using Blazor.Extensions.Canvas.Canvas2D;
 
 namespace Audacia.Quest
@@ -40,37 +39,16 @@ namespace Audacia.Quest
 
                 await _context.TranslateAsync(component.Transform.Position.X, component.Transform.Position.Y);
                 await _context.ScaleAsync(component.Transform.Scale.X, component.Transform.Scale.Y);
-                //await _context.RotateAsync(component.Transform.Rotation);
+                await _context.RotateAsync(component.Transform.Rotation);
 
                 await _context.DrawImageAsync(
-                    asset.Ref,
-                    component.Sprite.Origin.X, component.Sprite.Origin.Y,
-                    component.Sprite.Width,
-                    component.Sprite.Height);
-
-                //if (component.Renderer is SpriteRenderer)
-                //{
-                //    await _context.DrawImageAsync(
-                //        asset.Ref,
-                //        component.Renderer.Origin.X, component.Renderer.Origin.Y,
-                //        component.Renderer.Width,
-                //        component.Renderer.Height);
-                //}
-                //else if (component.Renderer is SpriteSheetRenderer spriteSheet)
-                //{
-                //    var frame = spriteSheet.GetCurrentFrame();
-
-                //    await _context.DrawImageAsync(
-                //       asset.Ref,
-                //       frame.X, frame.Y,
-                //       frame.Width,
-                //       frame.Height,
-                //       component.Renderer.Origin.X, component.Renderer.Origin.Y,
-                //       frame.Width,
-                //       frame.Height);
-
-                //    spriteSheet.NextFrame();
-                //}
+                   asset.Ref,
+                   component.Sprite.CurrentFrame.X, component.Sprite.CurrentFrame.Y,
+                   component.Sprite.CurrentFrame.Width,
+                   component.Sprite.CurrentFrame.Height,
+                   component.Sprite.Origin.X, component.Sprite.Origin.Y,
+                   component.Sprite.Width,
+                   component.Sprite.Height);
 
                 await _context.RestoreAsync();
             }
