@@ -8,6 +8,7 @@ namespace Audacia.Quest.Components
     {
         public override void Init()
         {
+            Transform.Position = new Vector2(130, 120);
             Transform.Scale = new Vector2(0.1f, 0.1f);
         }
 

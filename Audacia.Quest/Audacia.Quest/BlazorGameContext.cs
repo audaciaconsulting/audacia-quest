@@ -47,8 +47,8 @@ namespace Audacia.Quest
                    component.Sprite.CurrentFrame.Width,
                    component.Sprite.CurrentFrame.Height,
                    component.Sprite.Origin.X, component.Sprite.Origin.Y,
-                   component.Sprite.Width,
-                   component.Sprite.Height);
+                   component.Sprite.CurrentFrame.Width,
+                   component.Sprite.CurrentFrame.Height);
 
                 await _context.RestoreAsync();
             }

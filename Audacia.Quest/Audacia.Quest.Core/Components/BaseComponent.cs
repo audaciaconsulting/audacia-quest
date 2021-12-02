@@ -18,6 +18,12 @@ namespace Audacia.Quest.Core.Components
             return this;
         }
 
+        public IComponent WithComponent(IComponent component)
+        {
+            AddComponent(component);
+            return this;
+        }
+
         public void AddComponent(IComponent component)
         {
             if (component == null)
@@ -44,7 +50,7 @@ namespace Audacia.Quest.Core.Components
 
         public void Loaded()
         {
-            if(Sprite != null)
+            if (Sprite != null)
             {
                 Sprite.CurrentFrame.X = 0;
                 Sprite.CurrentFrame.Y = 0;

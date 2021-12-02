@@ -1,5 +1,4 @@
 ﻿using Audacia.Quest.Core.Asset;
-using Audacia.Quest.Core.Renderer;
 
 namespace Audacia.Quest.Core.Components
 {
