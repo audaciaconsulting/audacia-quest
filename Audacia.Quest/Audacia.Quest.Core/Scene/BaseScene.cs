@@ -51,19 +51,24 @@ namespace Audacia.Quest.Core.Scene
 
         private IEnumerable<IComponent> DepthFirstTraversal(IComponent node)
         {
-            var nodes = new Stack<IComponent>();
-            nodes.Push(node);
+            var nodes = new Queue<IComponent>();
+            nodes.Enqueue(node);
 
             while (nodes.Count > 0)
             {
-                var n = nodes.Pop();
-                n.Init();
-                n.Loaded();
+                var n = nodes.Dequeue();
+
+                if(n.Enabled)
+                {
+                    n.Init();
+                    n.Loaded();
+                }
+
                 yield return n;
 
                 foreach (var child in n.Components)
                 {
-                    nodes.Push(child.Value);
+                    nodes.Enqueue(child.Component);
                 }
             }
         }

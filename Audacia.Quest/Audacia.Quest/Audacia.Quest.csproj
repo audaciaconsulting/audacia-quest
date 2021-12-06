@@ -19,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\assets\Attack1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\assets\fox.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

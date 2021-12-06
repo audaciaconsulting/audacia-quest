@@ -6,11 +6,30 @@ namespace Audacia.Quest.Core.Components
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public bool Enabled { get; set; } = true;
         public Transform Transform { get; set; } = new Transform();
         public IComponent Parent { get; set; }
-        public IDictionary<string, IComponent> Components { get; set; } = new Dictionary<string, IComponent>();
+        public List<ComponentMap> Components { get; set; } = new List<ComponentMap>();
         public Sprite Sprite { get; set; }
+
+        private bool _enabled = true;
+
+        public bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+            set
+            {
+                var oldValue = _enabled;
+                _enabled = value;
+
+                if (value && oldValue != value)
+                {
+                    Init();
+                }
+            }
+        }
 
         public IComponent WithRenderer(Sprite sprite)
         {
@@ -18,8 +37,9 @@ namespace Audacia.Quest.Core.Components
             return this;
         }
 
-        public IComponent WithComponent(IComponent component)
+        public IComponent WithComponent(IComponent component, bool enabled = true)
         {
+            component.Enabled = enabled;
             AddComponent(component);
             return this;
         }
@@ -33,19 +53,36 @@ namespace Audacia.Quest.Core.Components
 
             component.Parent = this;
             var type = component.GetType();
-            Components.Add(type.Name, component);
+            Components.Add(new ComponentMap
+            {
+                Name = type.Name,
+                Component = component
+            });
         }
 
         public TComponent? GetComponent<TComponent>()
             where TComponent : IComponent
         {
             var name = typeof(TComponent).Name;
-            if (Components.ContainsKey(name))
+
+            var component = Components.FirstOrDefault(x => x.Name == name);
+            if (component != null)
             {
-                return (TComponent)Components[name];
+                return (TComponent)component.Component;
             }
 
             return default;
+        }
+
+        public List<TComponent> GetComponents<TComponent>()
+            where TComponent : IComponent
+        {
+            var name = typeof(TComponent).Name;
+
+            return Components
+                .Where(x => x.Name == name)
+                .Select(c => (TComponent)c.Component)
+                .ToList();
         }
 
         public void Loaded()

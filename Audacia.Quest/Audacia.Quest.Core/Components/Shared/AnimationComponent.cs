@@ -1,10 +1,14 @@
 ﻿using Audacia.Quest.Core.Asset;
 using System.Numerics;
 
-namespace Audacia.Quest.Core.Components
+namespace Audacia.Quest.Core.Components.Shared
 {
+    public delegate void AnimationCompleted();
+
     public class AnimationComponent : BaseComponent
     {
+        public AnimationCompleted AnimationCompletedHandler;
+
         public Sprite AnimationSprite { get; set; }
         public int Width { get; }
         public int Height { get; }
@@ -50,6 +54,11 @@ namespace Audacia.Quest.Core.Components
             NextFrame();
         }
 
+        public void ResetAnimation()
+        {
+            _currentFrameIndex = 0;
+        }
+
 
         private void NextFrame()
         {
@@ -61,6 +70,7 @@ namespace Audacia.Quest.Core.Components
                 {
                     _currentFrameIndex = 0;
                     Parent.Sprite.CurrentFrame = _frames[_currentFrameIndex];
+                    AnimationCompletedHandler?.Invoke();
                 }
                 else
                 {
