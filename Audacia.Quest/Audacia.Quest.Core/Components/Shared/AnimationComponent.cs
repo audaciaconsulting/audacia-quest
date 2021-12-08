@@ -20,11 +20,34 @@ namespace Audacia.Quest.Core.Components.Shared
         private Frame[] _frames;
 
         public AnimationComponent(Sprite sprite, int width, int height, int framesPerSecond)
+            : this(sprite, width, height, null, framesPerSecond) { }
+
+        public AnimationComponent(Sprite sprite, int width, int height, Frame[] frames, int framesPerSecond)
         {
             AnimationSprite = sprite;
             Width = width;
             Height = height;
             FramesPerSecond = framesPerSecond;
+
+            if (frames == null)
+            {
+                var frameCount = (int)(AnimationSprite.Width / Width);
+                _frames = new Frame[frameCount];
+
+                for (int i = 0; i < frameCount; i++)
+                {
+                    _frames[i] = new Frame();
+                    _frames[i].X = i * Width;
+                    _frames[i].Y = 0;
+                    _frames[i].Width = Width;
+                    _frames[i].Height = Height;
+                }
+            }
+            else
+            {
+                _frames = frames;
+            }
+
         }
 
         public override void Init()
@@ -35,18 +58,6 @@ namespace Audacia.Quest.Core.Components.Shared
             AnimationSprite.CurrentFrame.Height = Height;
             AnimationSprite.Origin = new Vector2(-Width / 2, -Height / 2);
             Parent.Sprite = AnimationSprite;
-
-            var frameCount = (int)(AnimationSprite.Width / Width);
-            _frames = new Frame[frameCount];
-
-            for (int i = 0; i < frameCount; i++)
-            {
-                _frames[i] = new Frame();
-                _frames[i].X = i * Width;
-                _frames[i].Y = 0;
-                _frames[i].Width = Width;
-                _frames[i].Height = Height;
-            }
         }
 
         public override void Update()

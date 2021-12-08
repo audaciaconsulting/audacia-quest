@@ -1,5 +1,4 @@
-﻿using Audacia.Quest.Core.Asset;
-using Audacia.Quest.Core.Components;
+﻿using Audacia.Quest.Core.Components;
 using System.Numerics;
 
 namespace Audacia.Quest.Components
