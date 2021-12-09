@@ -24,7 +24,7 @@ namespace Audacia.Quest.Core.Components
                 var oldValue = _enabled;
                 _enabled = value;
 
-                if (value && oldValue != value)
+                if (_enabled && oldValue != _enabled)
                 {
                     Init();
                 }
@@ -65,7 +65,7 @@ namespace Audacia.Quest.Core.Components
         {
             var name = typeof(TComponent).Name;
 
-            var component = Components.FirstOrDefault(x => x.Name == name);
+            var component = Components.FirstOrDefault(x => x.Name == nameof(TComponent));
             if (component != null)
             {
                 return (TComponent)component.Component;
@@ -74,7 +74,7 @@ namespace Audacia.Quest.Core.Components
             return default;
         }
 
-        public List<TComponent> GetComponents<TComponent>()
+        public IList<TComponent> GetComponents<TComponent>()
             where TComponent : IComponent
         {
             var name = typeof(TComponent).Name;

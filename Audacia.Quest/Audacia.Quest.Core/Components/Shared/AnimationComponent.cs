@@ -47,7 +47,6 @@ namespace Audacia.Quest.Core.Components.Shared
             {
                 _frames = frames;
             }
-
         }
 
         public override void Init()

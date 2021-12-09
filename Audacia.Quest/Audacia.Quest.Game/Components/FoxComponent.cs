@@ -9,6 +9,7 @@ namespace Audacia.Quest.Components
         {
             Transform.Position = new Vector2(130, 120);
             Transform.Scale = new Vector2(0.1f, 0.1f);
+            Transform.Rotation = 1.5f;
         }
 
         public override void Update()
