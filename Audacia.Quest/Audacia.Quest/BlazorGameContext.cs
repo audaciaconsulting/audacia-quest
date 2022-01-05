@@ -1,4 +1,5 @@
 ﻿using Audacia.Quest.Core;
+using Audacia.Quest.Core.Asset;
 using Blazor.Extensions.Canvas.Canvas2D;
 
 namespace Audacia.Quest
@@ -8,39 +9,48 @@ namespace Audacia.Quest
         private readonly Canvas2DContext _context;
 
         public List<BlazorAsset> Assets { get; set; } = new List<BlazorAsset>();
-        public delegate Task OnAssetInitialized();
-        public event OnAssetInitialized OnAssetInitializedHandeler;
 
         public BlazorGameContext(Canvas2DContext context)
         {
             _context = context;
         }
 
-        public void LoadContent(List<Core.Components.IComponent> components)
+        public void LoadContent(List<Sprite> sprites)
         {
-            var renderable = components.Where(c => c.Renderer != null);
-
-            Assets = renderable.Select(r => new BlazorAsset
+            Assets = sprites.Select(r => new BlazorAsset
             {
-                Id = r.Id,
-                Renderer = r.Renderer
+                Source = r.ImageSource,
+                Sprite = r
             }).ToList();
+        }
 
-            OnAssetInitializedHandeler?.Invoke();
+        public bool ContentLoaded()
+        {
+            return Assets.All(a => a.Loaded);
         }
 
         public async Task Draw(Core.Components.IComponent component)
         {
-            var asset = Assets.FirstOrDefault(a => a.Id == component.Id);
+            var asset = Assets.FirstOrDefault(a => a.Source == component.Sprite?.ImageSource);
 
-            if (asset != null && component.Renderer != null)
+            if (asset != null && component.Sprite != null)
             {
+                await _context.SaveAsync();
+
+                await _context.TranslateAsync(component.Transform.Position.X, component.Transform.Position.Y);
+                await _context.ScaleAsync(component.Transform.Scale.X, component.Transform.Scale.Y);
+                await _context.RotateAsync(component.Transform.Rotation);
+
                 await _context.DrawImageAsync(
-                    asset.Ref,
-                    component.Transform.Position.X,
-                    component.Transform.Position.Y,
-                    component.Renderer.Width * component.Transform.Scale.X,
-                    component.Renderer.Height * component.Transform.Scale.Y);
+                   asset.Ref,
+                   component.Sprite.CurrentFrame.X, component.Sprite.CurrentFrame.Y,
+                   component.Sprite.CurrentFrame.Width,
+                   component.Sprite.CurrentFrame.Height,
+                   component.Sprite.Origin.X, component.Sprite.Origin.Y,
+                   component.Sprite.CurrentFrame.Width,
+                   component.Sprite.CurrentFrame.Height);
+
+                await _context.RestoreAsync();
             }
         }
     }

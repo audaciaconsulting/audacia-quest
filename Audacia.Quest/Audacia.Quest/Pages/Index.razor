@@ -22,8 +22,10 @@
 {
     private Canvas2DContext _context;
     private BECanvasComponent _canvas;
-    private Game _game;
+    private IGame _game;
     private BlazorGameContext _gameContext;
+
+    private bool _loadContent = true;
 
     [Parameter]
     public bool Initialized { get; set; } = false;
@@ -36,7 +38,6 @@
         {
             await InitGame();
             Initialized = true;
-            this.StateHasChanged();
         }
     }
 
@@ -71,6 +72,13 @@
         if (_game.Update())
         {
             this.StateHasChanged();
+            _loadContent = true;
+        }
+
+        if (_gameContext.ContentLoaded() && _loadContent)
+        {
+            _game.ContentLoaded();
+            _loadContent = false;
         }
 
         await _context.ClearRectAsync(0, 0, _canvas.Width, _canvas.Height);

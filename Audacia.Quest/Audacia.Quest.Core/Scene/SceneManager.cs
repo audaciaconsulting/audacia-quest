@@ -1,4 +1,6 @@
-﻿namespace Audacia.Quest.Core.Scene
+﻿using Audacia.Quest.Core.Asset;
+
+namespace Audacia.Quest.Core.Scene
 {
     public class SceneManager
     {
@@ -24,7 +26,6 @@
         {
             if (_shouldLoad)
             {
-                _currentScene.Init();
                 _currentScene.LoadContent();
 
                 _shouldLoad = false;
@@ -32,6 +33,11 @@
             }
 
             return false;
+        }
+
+        public static void Init()
+        {
+            _currentScene.Init();
         }
 
         public static void SetCurrentScene(int index)

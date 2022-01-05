@@ -1,4 +1,5 @@
-﻿using Audacia.Quest.Core.Components;
+﻿using Audacia.Quest.Core.Asset;
+using Audacia.Quest.Core.Components;
 
 namespace Audacia.Quest.Core.Scene
 {
@@ -17,16 +18,13 @@ namespace Audacia.Quest.Core.Scene
             Components.AddRange(DepthFirstTraversal(component));
         }
 
+        public abstract void LoadContent();
         public abstract void Init();
-
-        public void LoadContent()
-        {
-            _context.LoadContent(Components);
-        }
 
         public void Reset()
         {
             Components.Clear();
+            AssetResolver.Clear();
         }
 
         public void Update()
@@ -44,7 +42,7 @@ namespace Audacia.Quest.Core.Scene
         {
             foreach (var component in Components)
             {
-                if (component.Enabled && component.Renderer != null)
+                if (component.Enabled && component.Sprite != null)
                 {
                     _context.Draw(component);
                 }
@@ -53,18 +51,24 @@ namespace Audacia.Quest.Core.Scene
 
         private IEnumerable<IComponent> DepthFirstTraversal(IComponent node)
         {
-            var nodes = new Stack<IComponent>();
-            nodes.Push(node);
+            var nodes = new Queue<IComponent>();
+            nodes.Enqueue(node);
 
             while (nodes.Count > 0)
             {
-                var n = nodes.Pop();
-                n.Init();
+                var n = nodes.Dequeue();
+
+                if(n.Enabled)
+                {
+                    n.Init();
+                    n.Loaded();
+                }
+
                 yield return n;
 
                 foreach (var child in n.Components)
                 {
-                    nodes.Push(child.Value);
+                    nodes.Enqueue(child.Component);
                 }
             }
         }

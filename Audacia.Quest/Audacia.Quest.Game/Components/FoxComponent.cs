@@ -1,5 +1,4 @@
 ﻿using Audacia.Quest.Core.Components;
-using Audacia.Quest.Core.Renderer;
 using System.Numerics;
 
 namespace Audacia.Quest.Components
@@ -8,8 +7,9 @@ namespace Audacia.Quest.Components
     {
         public override void Init()
         {
-            Renderer = new SpriteRenderer("assets/fox.png");
+            Transform.Position = new Vector2(130, 120);
             Transform.Scale = new Vector2(0.1f, 0.1f);
+            Transform.Rotation = 1.5f;
         }
 
         public override void Update()
