@@ -8,12 +8,7 @@ namespace Audacia.Quest
     {
         private readonly Canvas2DContext _context;
 
-        public List<BlazorAsset> Assets { get; set; } = new List<BlazorAsset>();
 
-        public BlazorGameContext(Canvas2DContext context)
-        {
-            _context = context;
-        }
 
         public void LoadContent(List<Sprite> sprites)
         {
